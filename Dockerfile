@@ -13,7 +13,12 @@ RUN apt-get update && apt-get install -y \
   cups \
   cups-client \
   cups-bsd \
-  lsb
+  lsb \
+	avahi-daemon \
+	cups-pdf \
+	cups-filters \
+  ghostscript \
+  foomatic-db-compressed-ppds
 
 ENV LANG=en_US.UTF-8 \
   LC_ALL=en_US.UTF-8 \
@@ -32,9 +37,9 @@ RUN useradd \
   && mkdir /var/lib/apt/lists/partial
 
 WORKDIR $HOME/setup
-COPY ./epson-inkjet-printer-201113w_1.0.2-1lsb3.2_amd64.deb ./ 
-RUN dpkg -i ./epson-inkjet-printer-201113w_1.0.2-1lsb3.2_amd64.deb
-
+COPY ./epson-inkjet-printer-escpr_1.7.21-1lsb3.2_amd64.deb ./ 
+RUN dpkg -i ./epson-inkjet-printer-escpr_1.7.21-1lsb3.2_amd64.deb
+RUN rm ./epson-inkjet-printer-escpr_1.7.21-1lsb3.2_amd64.deb
 
 # Default shell
 CMD ["/usr/sbin/cupsd", "-f"]
